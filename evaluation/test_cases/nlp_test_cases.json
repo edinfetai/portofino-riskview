@@ -1,0 +1,126 @@
+[
+  {
+    "id": "NLP-01",
+    "difficulty": "basic",
+    "description": "Klare Prozentgewichte ohne Stress-Szenario.",
+    "input_text": "Mein Portfolio besteht aus 40 % AAPL, 30 % MSFT, 20 % NVDA und 10 % TSLA. Analysiere mein Risiko.",
+    "expected_tickers": [
+      "AAPL",
+      "MSFT",
+      "NVDA",
+      "TSLA"
+    ],
+    "expected_weights": {
+      "AAPL": 0.4,
+      "MSFT": 0.3,
+      "NVDA": 0.2,
+      "TSLA": 0.1
+    },
+    "expected_shocks": {},
+    "expect_success": true
+  },
+  {
+    "id": "NLP-02",
+    "difficulty": "basic",
+    "description": "Breit diversifiziertes Portfolio.",
+    "input_text": "Ich halte 50 % SPY, 25 % TLT, 15 % GLD und 10 % JNJ. Wie diversifiziert ist das Portfolio?",
+    "expected_tickers": [
+      "SPY",
+      "TLT",
+      "GLD",
+      "JNJ"
+    ],
+    "expected_weights": {
+      "SPY": 0.5,
+      "TLT": 0.25,
+      "GLD": 0.15,
+      "JNJ": 0.1
+    },
+    "expected_shocks": {},
+    "expect_success": true
+  },
+  {
+    "id": "NLP-03",
+    "difficulty": "stress",
+    "description": "Explizites Stress-Szenario mit drei Schocks.",
+    "input_text": "Mein Portfolio besteht aus 60 % NVDA, 25 % TSLA und 15 % AAPL. Teste NVDA -15 %, TSLA -20 % und AAPL -10 %.",
+    "expected_tickers": [
+      "NVDA",
+      "TSLA",
+      "AAPL"
+    ],
+    "expected_weights": {
+      "NVDA": 0.6,
+      "TSLA": 0.25,
+      "AAPL": 0.15
+    },
+    "expected_shocks": {
+      "NVDA": -0.15,
+      "TSLA": -0.2,
+      "AAPL": -0.1
+    },
+    "expect_success": true
+  },
+  {
+    "id": "NLP-04",
+    "difficulty": "market_values",
+    "description": "Marktwerte statt expliziter Prozentgewichte.",
+    "input_text": "In meinem Depot liegen 12000 CHF in SPY, 6000 CHF in TLT, 4000 CHF in GLD und 2000 CHF in JNJ. Bitte bewerte das Risiko.",
+    "expected_tickers": [
+      "SPY",
+      "TLT",
+      "GLD",
+      "JNJ"
+    ],
+    "expected_weights": {
+      "SPY": 0.5,
+      "TLT": 0.25,
+      "GLD": 0.166667,
+      "JNJ": 0.083333
+    },
+    "expected_shocks": {},
+    "expect_success": true
+  },
+  {
+    "id": "NLP-05",
+    "difficulty": "natural_language",
+    "description": "Natürlichere Formulierung mit Dezimalprozenten.",
+    "input_text": "Bitte analysiere ein Portfolio mit 37,5 % AAPL, 27,5 % MSFT, 20 % QQQ und 15 % GLD.",
+    "expected_tickers": [
+      "AAPL",
+      "MSFT",
+      "QQQ",
+      "GLD"
+    ],
+    "expected_weights": {
+      "AAPL": 0.375,
+      "MSFT": 0.275,
+      "QQQ": 0.2,
+      "GLD": 0.15
+    },
+    "expected_shocks": {},
+    "expect_success": true
+  },
+  {
+    "id": "NLP-06",
+    "difficulty": "stress",
+    "description": "Hohes Risiko plus zusätzlicher Stresstest.",
+    "input_text": "Mein Portfolio besteht aus 85 % SOXL, 10 % TQQQ und 5 % TSLA. Analysiere mein Risiko und teste zusätzlich: SOXL fällt um 30 %, TQQQ um 20 % und TSLA um 15 %.",
+    "expected_tickers": [
+      "SOXL",
+      "TQQQ",
+      "TSLA"
+    ],
+    "expected_weights": {
+      "SOXL": 0.85,
+      "TQQQ": 0.1,
+      "TSLA": 0.05
+    },
+    "expected_shocks": {
+      "SOXL": -0.3,
+      "TQQQ": -0.2,
+      "TSLA": -0.15
+    },
+    "expect_success": true
+  }
+]

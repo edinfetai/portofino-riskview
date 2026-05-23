@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+openai
+pandas
+numpy
+scikit-learn
+joblib
+yfinance
+matplotlib
+pillow

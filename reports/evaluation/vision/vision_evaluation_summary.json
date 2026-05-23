@@ -1,0 +1,15 @@
+{
+  "number_of_cases": 3,
+  "available_images": 3,
+  "vision_success_rate": 1.0,
+  "resolver_success_rate": 1.0,
+  "end_to_end_success_rate": 1.0,
+  "number_of_exact_cases": 2,
+  "number_of_coverage_cases": 1,
+  "ticker_exact_match_rate_exact_cases": 1.0,
+  "average_ticker_jaccard_exact_cases": 1.0,
+  "weights_within_tolerance_rate_exact_cases": 1.0,
+  "mean_weight_mae_exact_cases": 0.0,
+  "coverage_pass_rate_complex_cases": 1.0,
+  "weight_tolerance": 0.055
+}

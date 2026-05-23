@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portofino RiskView</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand-mini">
+            <span class="brand-dot"></span>
+            <span class="brand-name">PORTOFINO</span>
+            <span class="brand-accent">RISKVIEW</span>
+        </div>
+        <div class="market-status">
+            <span class="market-caption">MARKET STATUS</span>
+            <span class="market-live">LIVE / CONNECTED</span>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="hero">
+            <div class="system-live">
+                <span class="micro-dot"></span>
+                <span>SYSTEM LIVE</span>
+            </div>
+
+            <h1>Portofino RiskView</h1>
+
+            <p class="hero-copy">
+                Präzise Risikoanalyse und Stresstests auf Basis von Machine Learning.
+                Identifizieren Sie verborgene Korrelationen und simulieren Sie Marktschocks in Echtzeit.
+            </p>
+
+            <div class="disclaimer">
+                <span class="warning-icon">△</span>
+                <span>
+                    Disclaimer: Diese Analyse dient ausschliesslich Bildungszwecken.
+                    Ergebnisse basieren auf ML-Modellen und historischen Daten. Keine Anlageberatung.
+                </span>
+            </div>
+        </section>
+
+        <div class="hero-divider"></div>
+
+        <section class="capability-pills">
+            <span class="pill">📊 ML Numeric Data</span>
+            <span class="pill">💬 NLP</span>
+            <span class="pill">🖼️ Computer Vision</span>
+            <span class="pill pill-live">📡 Live-FRED</span>
+        </section>
+
+        <section class="analysis-shell">
+            <nav class="input-tabs">
+                <button id="textTab" class="tab-btn active" type="button">▥ Textanalyse</button>
+                <button id="imageTab" class="tab-btn" type="button">▧ Bild-Upload</button>
+            </nav>
+
+            <div class="input-panel">
+                <div id="textPane" class="input-pane active">
+                    <div class="input-main">
+                        <label for="portfolioText">Portfolio Beschreibung</label>
+                        <textarea id="portfolioText" placeholder="Beispiel: 40 % AAPL, 30 % MSFT, 20 % NVDA, 10 % Gold ETF..."></textarea>
+                        <div class="example-gallery">
+                            <button type="button" class="example-card example-low" data-example="Mein Portfolio besteht aus 50 % SPY, 25 % TLT, 15 % GLD und 10 % JNJ. Analysiere mein Risiko und erkläre mir die Diversifikation.">
+                                <span>Niedriges Risiko</span>
+                                <p>Mein Portfolio besteht aus 50 % SPY, 25 % TLT, 15 % GLD und 10 % JNJ. Analysiere mein Risiko und erkläre mir die Diversifikation.</p>
+                            </button>
+
+                            <button type="button" class="example-card example-medium" data-example="Mein Portfolio besteht aus 60 % NVDA, 25 % TSLA und 15 % AAPL. Teste NVDA -15 %, TSLA -20 % und AAPL -10 %.">
+                                <span>Mittleres Risiko</span>
+                                <p>Mein Portfolio besteht aus 60 % NVDA, 25 % TSLA und 15 % AAPL. Teste NVDA -15 %, TSLA -20 % und AAPL -10 %.</p>
+                            </button>
+
+                            <button type="button" class="example-card example-high" data-example="Mein Portfolio besteht aus 85 % SOXL, 10 % TQQQ und 5 % TSLA. Analysiere mein Risiko und teste zusätzlich: SOXL fällt um 30 %, TQQQ fällt um 20 % und TSLA fällt um 15 %.">
+                                <span>Hohes Risiko</span>
+                                <p>Mein Portfolio besteht aus 85 % SOXL, 10 % TQQQ und 5 % TSLA. Analysiere mein Risiko und teste zusätzlich ein starkes Stress-Szenario.</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <aside class="analysis-action">
+                        <h3>Analysieren</h3>
+                        <p>Starten Sie die ML-gestützte Risikoklassifizierung für das oben definierte Portfolio.</p>
+                        <button id="analyzeTextButton" class="primary-action" type="button">✣ Portfolio analysieren</button>
+                    </aside>
+                </div>
+
+                <div id="imagePane" class="input-pane">
+                    <div class="input-main">
+                        <label for="imageQuestion">Zusatzfrage zum Bild</label>
+                        <textarea id="imageQuestion" class="compact-textarea" placeholder="Beispiel: Analysiere mein Portfolio-Risiko und achte besonders auf Konzentrationsrisiken."></textarea>
+
+                        <label for="portfolioImage">Portfolio Screenshot</label>
+                        <div class="file-drop" id="portfolioImageDrop">
+                            <input id="portfolioImage" type="file" accept="image/png,image/jpeg,image/webp" />
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <span id="fileName">PNG, JPG oder WEBP auswählen</span>
+                                <small>Das gewählte Bild wird hier gross als Vorschau angezeigt.</small>
+                            </div>
+                            <img
+                                id="portfolioPreview"
+                                class="portfolio-preview hidden"
+                                src=""
+                                alt="Vorschau des ausgewählten Portfolio-Bildes"
+                            />
+                            <div id="portfolioPreviewCaption" class="preview-caption hidden"></div>
+                        </div>
+
+                        <div class="image-example-section">
+                            <label>Beispielbilder zur Bildanalyse</label>
+                            <div class="image-example-gallery">
+                                <button type="button" class="image-example-card" data-example-image="low">
+                                    <img src="/static/examples/example_low.png" alt="Beispielbild niedriges Risiko" />
+                                    <span>Niedriges Risiko</span>
+                                    <p>Defensives, breit diversifiziertes Portfolio.</p>
+                                </button>
+
+                                <button type="button" class="image-example-card" data-example-image="medium">
+                                    <img src="/static/examples/example_medium.png" alt="Beispielbild mittleres Risiko" />
+                                    <span>Mittleres Risiko</span>
+                                    <p>Tech-lastiges Wachstumsportfolio mit Konzentration.</p>
+                                </button>
+
+                                <button type="button" class="image-example-card" data-example-image="high">
+                                    <img src="/static/examples/example_high.png" alt="Beispielbild hohes Risiko" />
+                                    <span>Hohes Risiko</span>
+                                    <p>Aggressives Portfolio mit Hebelprodukten.</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="analysis-action">
+                        <h3>Bild analysieren</h3>
+                        <p>Die Anwendung erkennt sichtbare Holdings und leitet sie an dieselbe Risiko-Pipeline weiter.</p>
+                        <button id="analyzeImageButton" class="primary-action" type="button">⌗ Bildportfolio analysieren</button>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="loadingPanel" class="loading-panel hidden">
+            <div class="spinner"></div>
+            <div>
+                <strong>Analyse läuft</strong>
+                <p>Portfolio wird extrahiert, Marktdaten werden geladen und das Modell berechnet die Risikoklasse.</p>
+            </div>
+        </section>
+
+        <section id="errorPanel" class="error-panel hidden">
+            <strong>Analyse nicht möglich</strong>
+            <p id="errorText"></p>
+        </section>
+
+        <section id="dashboard" class="dashboard hidden">
+            <div class="dashboard-head">
+                <div>
+                    <span class="eyebrow">Analyse</span>
+                    <h2>Portfolio-Dashboard</h2>
+                </div>
+                <div class="last-update">
+                    <span>LAST UPDATE:</span>
+                    <strong id="lastUpdate">—</strong>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <article id="riskCard" class="risk-card risk-medium">
+                    <div class="risk-top">
+                        <span>Risikoklassifikation</span>
+                        <em id="riskId">ID: RISK-—</em>
+                    </div>
+                    <div class="risk-mainline">
+                        <strong id="riskLabel">—</strong>
+                        <div class="confidence">
+                            <b id="riskConfidence">—</b>
+                            <small>Confidence</small>
+                        </div>
+                    </div>
+                    <div class="risk-track">
+                        <span id="riskTrackFill"></span>
+                    </div>
+                    <div class="risk-scale">
+                        <span>Niedrig</span>
+                        <span>Wahrscheinlichkeit</span>
+                        <span>Hoch</span>
+                    </div>
+                    <p id="riskSummary">Nach der Analyse erscheint hier eine kompakte Zusammenfassung.</p>
+                </article>
+
+                <div class="metric-cards">
+                    <article class="metric-card">
+                        <span class="metric-icon">📈</span>
+                        <label>Volatilität (63D)</label>
+                        <strong id="metricVolatility">—</strong>
+                        <p>Schwankungsintensität des Portfolios</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon">📉</span>
+                        <label>Max. Drawdown</label>
+                        <strong id="metricDrawdown">—</strong>
+                        <p>Grösster Rückgang im betrachteten Zeitraum</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon">⚖️</span>
+                        <label>Markt-Beta</label>
+                        <strong id="metricBeta">—</strong>
+                        <p>Empfindlichkeit gegenüber dem Gesamtmarkt</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon">🎯</span>
+                        <label>Grösste Position</label>
+                        <strong id="metricLargest">—</strong>
+                        <p>Konzentration in der stärksten Position</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon">🧩</span>
+                        <label>Top-3 Konz.</label>
+                        <strong id="metricTop3">—</strong>
+                        <p>Anteil der drei grössten Positionen</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon">🔗</span>
+                        <label>Ø Korrelation</label>
+                        <strong id="metricCorrelation">—</strong>
+                        <p>Ähnlichkeit der Kursbewegungen</p>
+                    </article>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <article class="chart-card">
+                    <h3>Portfolio-Gewichtung</h3>
+                    <canvas id="weightsChart"></canvas>
+                </article>
+                <article class="chart-card">
+                    <h3>Risikowahrscheinlichkeiten</h3>
+                    <canvas id="riskChart"></canvas>
+                </article>
+            </div>
+
+            <details class="technical-details">
+                <summary>
+                    <span>Strukturierte Extraktion und technische Details</span>
+                    <em>JSON anzeigen</em>
+                </summary>
+
+                <div class="json-grid">
+                    <article class="json-card">
+                        <h3>Extrahiertes Portfolio-JSON</h3>
+                        <pre id="extractedJson">Noch keine Analyse ausgeführt.</pre>
+                    </article>
+
+                    <article class="json-card">
+                        <h3>ML-Ergebnis und Modellfeatures</h3>
+                        <pre id="technicalJson">Noch keine Analyse ausgeführt.</pre>
+                    </article>
+                </div>
+            </details>
+
+            <div class="insight-grid">
+                <article class="ai-card">
+                    <h3>✣ KI-Erklärung</h3>
+                    <p id="aiExplanation">
+                        Nach der Analyse erscheint hier die modellgestützte Erklärung zu Risikotreibern,
+                        Diversifikation und Szenarioeffekten.
+                    </p>
+                    <div class="ai-footer">
+                        <span>Datenqualität</span>
+                        <strong>◉ Live / Market Close</strong>
+                    </div>
+                </article>
+
+                <aside class="side-stack">
+                    <article class="stress-card">
+                        <h3>🧪 Stress-Test</h3>
+                        <div id="stressContent">
+                            <p>Kein explizites Stress-Szenario erkannt.</p>
+                        </div>
+                    </article>
+
+                    <article class="freshness-card">
+                        <h3>⌁ Datenaktualität</h3>
+                        <dl>
+                            <div><dt>Marktquelle</dt><dd id="freshMarket">—</dd></div>
+                            <div><dt>Preisintervall</dt><dd id="freshInterval">—</dd></div>
+                            <div><dt>Letzter Zeitpunkt</dt><dd id="freshTimestamp">—</dd></div>
+                            <div><dt>Zeilen</dt><dd id="freshRows">—</dd></div>
+                        </dl>
+                    </article>
+                </aside>
+            </div>
+        </section>
+
+        <section class="metrics-knowledge">
+            <div class="knowledge-heading">
+                <span class="eyebrow">Metriken verstehen</span>
+                <h2>Was die Analysekennzahlen bedeuten</h2>
+                <p class="knowledge-intro">
+                    Die Kennzahlen übersetzen komplexe Marktdaten in verständliche Hinweise.
+                    Sie helfen dabei einzuschätzen, ob ein Portfolio eher ruhig, stark konzentriert
+                    oder besonders empfindlich gegenüber Marktbewegungen ist.
+                </p>
+            </div>
+
+            <div class="knowledge-grid">
+                <article>
+                    <span>📈</span>
+                    <h3>Volatilität</h3>
+                    <p>
+                        Volatilität zeigt, wie stark der Portfoliowert typischerweise auf und ab schwankt.
+                        Sie sagt nicht direkt, ob das Portfolio steigt oder fällt, sondern wie unruhig die Bewegung ist.
+                        Für Laien kann man sagen: Je höher die Volatilität, desto stärker sind die täglichen Ausschläge.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Ein Portfolio mit 10 % Volatilität verhält sich meist ruhiger
+                        als eines mit 30 %. Bei 30 % sind deutlich grössere Kursschwankungen wahrscheinlicher.
+                    </div>
+                </article>
+
+                <article>
+                    <span>📉</span>
+                    <h3>Max. Drawdown</h3>
+                    <p>
+                        Der maximale Drawdown zeigt, wie stark das Portfolio in der betrachteten Vergangenheit
+                        vom vorherigen Höchststand bis zum tiefsten Punkt gefallen ist.
+                        Er macht sichtbar, wie gross ein zwischenzeitlicher Verlust in einer schlechten Phase war.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Ein Drawdown von -15 % bedeutet:
+                        Nach einem Hoch lag das Portfolio zeitweise 15 % tiefer,
+                        bevor es sich möglicherweise wieder erholt hat.
+                    </div>
+                </article>
+
+                <article>
+                    <span>⚖️</span>
+                    <h3>Markt-Beta</h3>
+                    <p>
+                        Beta beschreibt, wie stark sich das Portfolio im Vergleich zum Gesamtmarkt bewegt.
+                        Ein Wert nahe 1 bedeutet: Das Portfolio reagiert ungefähr wie der Markt.
+                        Werte über 1 deuten auf stärkere Reaktionen hin, Werte unter 1 auf defensiveres Verhalten.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Bei Beta 1.5 kann ein Marktanstieg von 2 %
+                        grob mit einer stärkeren Portfolio-Bewegung verbunden sein als bei Beta 0.7.
+                    </div>
+                </article>
+
+                <article>
+                    <span>🎯</span>
+                    <h3>Grösste Position</h3>
+                    <p>
+                        Diese Kennzahl zeigt, wie stark das Portfolio von einer einzigen Position abhängt.
+                        Je grösser dieser Anteil ist, desto wichtiger wird die Entwicklung genau dieser Aktie oder dieses ETFs.
+                        Das nennt man Konzentrations- oder Klumpenrisiko.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Wenn 70 % des Portfolios in nur einer Aktie liegen,
+                        beeinflusst deren Kurs das Gesamtergebnis viel stärker als bei einer grössten Position von 25 %.
+                    </div>
+                </article>
+
+                <article>
+                    <span>🧩</span>
+                    <h3>Top-3-Konzentration</h3>
+                    <p>
+                        Diese Kennzahl fasst zusammen, wie viel Kapital in den drei grössten Positionen steckt.
+                        Ein sehr hoher Wert bedeutet, dass nur wenige Anlagen das Gesamtportfolio dominieren.
+                        Dadurch kann sich das Portfolio trotz mehrerer Positionen weniger breit gestreut anfühlen.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Liegen 95 % des Portfolios in den Top 3,
+                        ist es deutlich konzentrierter als ein Portfolio, bei dem die Top 3 zusammen nur 55 % ausmachen.
+                    </div>
+                </article>
+
+                <article>
+                    <span>🔗</span>
+                    <h3>Ø Korrelation</h3>
+                    <p>
+                        Korrelation zeigt, ob sich die Positionen ähnlich oder unterschiedlich bewegen.
+                        Wenn viele Anlagen gleichzeitig steigen und fallen, ist die Diversifikation geringer.
+                        Niedrigere Korrelation kann helfen, Schwankungen besser auszugleichen.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Eine durchschnittliche Korrelation von 0.80 bedeutet starken Gleichlauf.
+                        Ein Wert von 0.25 weist eher darauf hin, dass sich die Anlagen unabhängiger verhalten.
+                    </div>
+                </article>
+
+                <article class="knowledge-wide">
+                    <span>🧪</span>
+                    <h3>Stress-Test</h3>
+                    <p>
+                        Der Stress-Test simuliert ein selbst formuliertes Schockszenario.
+                        Er prüft vereinfacht, wie stark das Portfolio reagieren würde,
+                        wenn bestimmte Positionen plötzlich deutlich fallen.
+                        Dadurch werden mögliche Verluste in einer hypothetischen Krisensituation greifbarer.
+                    </p>
+                    <div class="knowledge-example">
+                        <strong>Beispiel:</strong> Fällt NVDA um 15 % und macht 60 % des Portfolios aus,
+                        ergibt allein diese Position einen direkten Portfoliobeitrag von rund -9 %.
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <span class="brand-dot"></span>
+            <strong>Portofino RiskView</strong>
+            <p>
+                Multimodale Portfolio-Risikoanalyse mit ML Numeric Data, NLP,
+                Computer Vision sowie aktuellen Markt- und Makrodaten.
+            </p>
+        </div>
+
+        <div class="footer-meta">
+            <span class="footer-meta-title">Projektkontext</span>
+            <p>ZHAW School of Management and Law</p>
+            <p>KI-Anwendungen</p>
+            <p>Edin Fetai (fetaiedi)</p>
+            <p>Founder of StillJobLess Holding Group AG</p>
+        </div>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

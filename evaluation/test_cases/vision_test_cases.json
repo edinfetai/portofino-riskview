@@ -1,0 +1,52 @@
+[
+  {
+    "id": "CV-01",
+    "evaluation_mode": "coverage",
+    "difficulty": "complex_realistic_chart",
+    "description": "Komplexes Kreisdiagramm mit vielen ETF-/Fondsbezeichnungen. Bewertet wird hier die robuste End-to-End-Verarbeitung und die erfolgreiche Asset-Auflösung statt eines starren exakten Ticker-Sets.",
+    "image_path": "frontend/examples/example_low.png",
+    "optional_question": "Analysiere mein Portfolio-Risiko.",
+    "expected_visible_positions": 16,
+    "minimum_resolved_count": 13,
+    "maximum_unresolved_count": 3,
+    "expect_success": true
+  },
+  {
+    "id": "CV-02",
+    "evaluation_mode": "exact",
+    "difficulty": "table_image",
+    "description": "Wachstumsportfolio mit drei klar sichtbaren Aktienpositionen.",
+    "image_path": "frontend/examples/example_medium.png",
+    "optional_question": "Analysiere mein Portfolio-Risiko.",
+    "expected_tickers": [
+      "NVDA",
+      "TSLA",
+      "AAPL"
+    ],
+    "expected_weights": {
+      "NVDA": 0.6,
+      "TSLA": 0.25,
+      "AAPL": 0.15
+    },
+    "expect_success": true
+  },
+  {
+    "id": "CV-03",
+    "evaluation_mode": "exact",
+    "difficulty": "table_image",
+    "description": "Aggressives Beispielbild mit Hebelprodukten.",
+    "image_path": "frontend/examples/example_high.png",
+    "optional_question": "Analysiere mein Portfolio-Risiko.",
+    "expected_tickers": [
+      "SOXL",
+      "TQQQ",
+      "TSLA"
+    ],
+    "expected_weights": {
+      "SOXL": 0.85,
+      "TQQQ": 0.1,
+      "TSLA": 0.05
+    },
+    "expect_success": true
+  }
+]

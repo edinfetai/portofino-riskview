@@ -1,0 +1,4 @@
+model,macro_f1
+random_forest,0.624979961669269
+gradient_boosting,0.6128336548679427
+logistic_regression,0.5469431552082412

@@ -1,0 +1,12 @@
+{
+  "number_of_cases": 6,
+  "successful_calls": 6,
+  "call_success_rate": 1.0,
+  "ticker_exact_match_rate": 1.0,
+  "average_ticker_jaccard": 1.0,
+  "weights_within_tolerance_rate": 1.0,
+  "stress_exact_match_rate": 1.0,
+  "mean_weight_mae": 2.7777777778191053e-08,
+  "weight_tolerance": 0.035,
+  "shock_tolerance": 0.02
+}
